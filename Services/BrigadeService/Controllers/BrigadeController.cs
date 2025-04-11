@@ -1,0 +1,25 @@
+﻿using BrigadeService.Models.Requests;
+using BrigadeService.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+
+namespace BrigadeService.Controllers;
+
+[ApiController]
+[Route("api/brigade")]
+public class BrigadeController : BaseController
+{
+    private readonly IBrigadeService _brigadeService;
+
+    public BrigadeController(IBrigadeService brigadeService)
+    {
+        _brigadeService = brigadeService;
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> CreateToday([FromBody] CreateBrigadeRequest request)
+    {
+        var result = await _brigadeService.CreateTodayAsync(request.FirstUserId, request.SecondUserId);
+
+        return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Error);
+    }
+}
