@@ -15,6 +15,9 @@ services:
         build:
             context: ./ApiGateway
             dockerfile: Dockerfile
+        dns:
+            - 8.8.8.8
+            - 8.8.4.4
         ports:
             - "5000:5000"
         environment:
@@ -30,6 +33,9 @@ services:
         build:
             context: .
             dockerfile: ./Services/AuthService/Dockerfile
+        dns:
+            - 8.8.8.8
+            - 8.8.4.4
         ports:
             - "5001:5001"
         environment:
@@ -44,6 +50,9 @@ services:
         build:
             context: .
             dockerfile: ./Services/BrigadeService/Dockerfile
+        dns:
+            - 8.8.8.8
+            - 8.8.4.4
         ports:
             - "5003:5003"
         environment:
