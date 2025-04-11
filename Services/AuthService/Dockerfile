@@ -2,6 +2,8 @@
 WORKDIR /app
 EXPOSE 5001
 
+RUN apt-get update && apt-get install -y ca-certificates
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 COPY ./Services/AuthService/AuthService.csproj ./Services/AuthService/

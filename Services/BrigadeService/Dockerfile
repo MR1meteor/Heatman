@@ -2,6 +2,9 @@
 WORKDIR /app
 EXPOSE 5003
 
+RUN apt-get update && apt-get install -y ca-certificates
+
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 COPY ./Services/BrigadeService/BrigadeService.csproj ./Services/BrigadeService/
