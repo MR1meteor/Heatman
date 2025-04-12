@@ -25,7 +25,7 @@ public class BrigadeController : BaseController
         return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Error);
     }
 
-    [HttpGet]
+    [HttpGet("today/id/personal")]
     public async Task<IActionResult> GetPersonalId()
     {
         var result = await _brigadeService.GetIdByUserIds(FirstUserId, SecondUserId);
@@ -33,7 +33,7 @@ public class BrigadeController : BaseController
         return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Error);
     }
 
-    [HttpGet]
+    [HttpGet("today/id/by-users")]
     public async Task<IActionResult> GetTodayByUsers([FromQuery] Guid firstUserId, [FromQuery] Guid secondUserId)
     {
         var result = await _brigadeService.GetIdByUserIds(firstUserId.ToString(), secondUserId.ToString());

@@ -43,7 +43,7 @@ public class BrigadeServiceClient : IBrigadeServiceClient
 
     public async Task<Result<Guid>> GetTodayByUsersAsync(Guid firstUserId, Guid secondUserId)
     {
-        var response = await _httpClient.GetAsync($"{_baseUrl}/api/brigade?firstUserId={firstUserId}&secondUserId={secondUserId}");
+        var response = await _httpClient.GetAsync($"{_baseUrl}/api/brigade/today/id/by-users?firstUserId={firstUserId}&secondUserId={secondUserId}");
         var responseContent = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

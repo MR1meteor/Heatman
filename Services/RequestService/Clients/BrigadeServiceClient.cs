@@ -29,7 +29,7 @@ public class BrigadeServiceClient : IBrigadeServiceClient
             _logger.LogError($"Token is empty");
         }
 
-        var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/api/brigade");
+        var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/api/brigade/today/id/personal");
         request.Headers.Authorization = AuthenticationHeaderValue.Parse(token);
         
         var response = await _httpClient.SendAsync(request);
