@@ -9,14 +9,12 @@ public class BrigadeServiceClient : IBrigadeServiceClient
     private readonly string _baseUrl;
     private readonly ILogger<BrigadeServiceClient> _logger;
     private readonly HttpClient _httpClient;
-    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public BrigadeServiceClient(IConfiguration configuration, HttpClient httpClient, ILogger<BrigadeServiceClient> logger, IHttpContextAccessor httpContextAccessor)
+    public BrigadeServiceClient(IConfiguration configuration, HttpClient httpClient, ILogger<BrigadeServiceClient> logger)
     {
         _baseUrl = configuration.GetSection("Cluster")["BrigadeServiceUrl"];
         _httpClient = httpClient;
         _logger = logger;
-        _httpContextAccessor = httpContextAccessor;
     }
     
     public async Task<Result<Guid>> GetPersonalBrigadeId()

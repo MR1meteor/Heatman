@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using RequestService.Clients;
 using RequestService.DataAccess.Database.Postgres;
 using Shared.Dapper;
 using Shared.Dapper.Interfaces;
@@ -38,6 +39,8 @@ public class Startup
                 };
             });
 
+        services.AddHttpClient<BrigadeServiceClient>();
+        
         services.AddSingleton<IDapperSettings, PostgresDapperSettings>();
         services.AddSingleton<IDapperContext, DapperContext>();
         services.RegisterAllTypes<IDependency>(typeof(Startup).Assembly);
