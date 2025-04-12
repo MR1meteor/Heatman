@@ -17,7 +17,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "employee-service",
           "Port": 5002
         }
       ],
@@ -33,7 +33,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "brigade-service",
           "Port": 5003
         }
       ],
@@ -45,15 +45,15 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/tasks/{everything}",
+      "DownstreamPathTemplate": "/api/requests/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "request-service",
           "Port": 5004
         }
       ],
-      "UpstreamPathTemplate": "/tasks/{everything}",
+      "UpstreamPathTemplate": "/requests/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",

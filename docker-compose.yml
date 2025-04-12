@@ -22,6 +22,7 @@ services:
         depends_on:
             - auth-service
             - brigade-service
+            - request-service
         restart: always
         networks:
             - app-network
@@ -54,6 +55,20 @@ services:
         networks:
             - app-network
 
+    request-service:
+        build:
+            context: .
+            dockerfile: ./Services/RequestService/Dockerfile
+        ports:
+            - "5004:5004"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=${ENV}
+        depends_on:
+            - postgres
+        restart: always
+        networks:
+            - app-network
+
     postgres:
         image: postgres:16
         volumes:
@@ -62,7 +77,7 @@ services:
         environment:
             POSTGRES_USER: ${DB_USER}
             POSTGRES_PASSWORD: ${DB_PASSWORD}
-            POSTGRES_MULTIPLE_DATABASES: auth,brigade-service
+            POSTGRES_MULTIPLE_DATABASES: auth,brigade-service,request-service
             POSTGRES_MULTIPLE_EXTENSIONS: uuid-ossp
         ports:
             - "5432:5432"
