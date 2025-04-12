@@ -7,7 +7,6 @@ using Shared.Dapper;
 using Shared.Dapper.Interfaces;
 using Shared.DependencyInjection;
 using Shared.DependencyInjection.Interfaces;
-using Shared.Http;
 
 namespace RequestService;
 
@@ -42,9 +41,7 @@ public class Startup
 
 
         services.AddHttpContextAccessor();
-        services.AddTransient<HttpContextDelegatingHandler>();
-        services.AddHttpClient("ClusterHttpClient")
-            .AddHttpMessageHandler<HttpContextDelegatingHandler>();
+        services.AddHttpClient<BrigadeServiceClient>();
         
         services.AddSingleton<IDapperSettings, PostgresDapperSettings>();
         services.AddSingleton<IDapperContext, DapperContext>();
