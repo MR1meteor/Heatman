@@ -26,6 +26,9 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
+      },
+      "AddHeadersToDownstream": {
+        "Authorization": "{Authorization}"
       }
     },
     {
@@ -42,6 +45,9 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
+      },
+      "AddHeadersToDownstream": {
+        "Authorization": "{Authorization}"
       }
     },
     {
@@ -58,6 +64,9 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
+      },
+      "AddHeadersToDownstream": {
+        "Authorization": "{Authorization}"
       }
     },
     {
@@ -74,6 +83,9 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
+      },
+      "AddHeadersToDownstream": {
+        "Authorization": "{Authorization}"
       }
     }
   ],
