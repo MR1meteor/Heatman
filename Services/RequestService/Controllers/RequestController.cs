@@ -43,9 +43,9 @@ public class RequestController : BaseController
     }
 
     [HttpPost("by-excel")]
-    public async Task<IActionResult> CreateByExcel([FromBody] byte[] fileBytes)
+    public async Task<IActionResult> CreateByExcel([FromBody] CreateRequestByExcel request)
     {
-        var response = await _requestService.CreateByExcelFileAsync(fileBytes);
+        var response = await _requestService.CreateByExcelFileAsync(request.FileBytes);
 
         return Ok(response);
     }

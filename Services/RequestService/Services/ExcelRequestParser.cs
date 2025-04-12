@@ -46,25 +46,24 @@ public class ExcelRequestParser : IExcelRequestParser
     
     private bool IsExcelFile(byte[] fileBytes)
     {
-        // Проверка на расширение файла
         using (var stream = new MemoryStream(fileBytes))
         {
             using (var reader = new BinaryReader(stream))
             {
-                // Читаем первые 8 байт для определения формата
+                
                 var header = reader.ReadBytes(8);
-                // Проверяем на .xlsx (OOXML)
-                if (header[0] == 0x50 && header[1] == 0x4B) // PK
+                
+                if (header[0] == 0x50 && header[1] == 0x4B)
                 {
-                    return true; // Это .xlsx файл
+                    return true;
                 }
-                // Проверяем на .xls (BIFF)
-                if (header[0] == 0xD0 && header[1] == 0xCF) // D0 CF
+                
+                if (header[0] == 0xD0 && header[1] == 0xCF)
                 {
-                    return true; // Это .xls файл
+                    return true;
                 }
             }
         }
-        return false; // Не является Excel файлом
+        return false;
     }
 }
