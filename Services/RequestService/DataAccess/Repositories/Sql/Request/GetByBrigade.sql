@@ -2,7 +2,7 @@
        city AS "City",
        street AS "Street",
        room AS "Room",
-       flat AS "Flat"
+       flat AS "Flat",
        device AS "Device",
        status AS "Status",
        type AS "Type",
