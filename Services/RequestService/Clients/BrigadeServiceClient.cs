@@ -31,7 +31,7 @@ public class BrigadeServiceClient : IBrigadeServiceClient
 
         Console.WriteLine($"TESTT: {token}");
         var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/api/brigade");
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        request.Headers.Authorization = AuthenticationHeaderValue.Parse(token);
         
         var response = await _httpClient.SendAsync(request);
         var responseContent = await response.Content.ReadAsStringAsync();
