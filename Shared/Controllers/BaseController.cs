@@ -5,9 +5,10 @@ namespace Shared.Controllers;
 
 public class BaseController : ControllerBase, IActionFilter
 {
-    public string FirstUserId { get; private set; } = string.Empty;
-    public string SecondUserId { get; private set; } = string.Empty;
+    protected string FirstUserId { get; private set; } = string.Empty;
+    protected string SecondUserId { get; private set; } = string.Empty;
 
+    [NonAction]
     public void OnActionExecuting(ActionExecutingContext context)
     {
         if (HttpContext?.User == null)
@@ -19,6 +20,7 @@ public class BaseController : ControllerBase, IActionFilter
         SecondUserId = HttpContext.User.Claims.FirstOrDefault(c => c.Type.Equals("SecondUserId", StringComparison.OrdinalIgnoreCase))?.Value ?? string.Empty;
     }
 
+    [NonAction]
     public void OnActionExecuted(ActionExecutedContext context)
     {
         
