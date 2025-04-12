@@ -43,17 +43,33 @@ public class RequestController : BaseController
     }
 
     [HttpPost("by-excel")]
-    public async Task<IActionResult> CreateByExcel([FromBody] CreateRequestByExcel request)
+    public async Task<IActionResult> CreateByExcel([FromBody] UploadFileRequest request)
     {
         var response = await _requestService.CreateByExcelFileAsync(request.FileBytes);
 
         return Ok(response);
     }
 
-    [HttpPut("set-complete/{requestId:guid}")]
+    [HttpPut("{requestId:guid}/set-complete")]
     public async Task<IActionResult> SetCompleteStatus([FromRoute] Guid requestId)
     {
         var response = await _requestService.SetCompletedStatusAsync(requestId);
         return Ok(response);
+    }
+
+    [HttpPost("{requestId:guid}/before-photo")]
+    public async Task<IActionResult> UploadBeforePhoto([FromRoute] Guid requestId, [FromBody] UploadFileRequest request)
+    {
+        var isSuccess = await _requestService.UploadBeforeFileAsync(requestId, request.FileBytes);
+        
+        return isSuccess ? Ok() : BadRequest("File not uploaded");
+    }
+
+    [HttpPost("{requestId:guid}/after-photo")]
+    public async Task<IActionResult> UploadAfterPhoto([FromRoute] Guid requestId, [FromBody] UploadFileRequest request)
+    {
+        var isSuccess = await _requestService.UploadAfterFileAsync(requestId, request.FileBytes);
+        
+        return isSuccess ? Ok() : BadRequest("File not uploaded");
     }
 }

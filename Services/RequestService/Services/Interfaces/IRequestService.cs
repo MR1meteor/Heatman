@@ -11,4 +11,6 @@ public interface IRequestService : ITransient
     Task<bool> CreateAsync(CreateNewRequest request);
     Task<bool> CreateByExcelFileAsync(byte[] fileBytes);
     Task<bool> SetCompletedStatusAsync(Guid requestId);
+    Task<bool> UploadBeforeFileAsync(Guid requestId, byte[] fileBytes);
+    Task<bool> UploadAfterFileAsync(Guid requestId, byte[] fileBytes);
 }

@@ -53,4 +53,26 @@ public class RequestRepository : IRequestRepository
         
         await Task.WhenAll(insertTasks);
     }
+
+    public async Task SetBeforeImageAsync(Guid requestId, string imageName)
+    {
+        var parameters = new
+        {
+            RequestId = requestId,
+            ImageName = imageName
+        };
+
+        await _dapperContext.Command<DbRequest>(new QueryObject(SqlScripts.UpdateBeforeImageById, parameters));
+    }
+
+    public async Task SetAfterImageAsync(Guid requestId, string imageName)
+    {
+        var parameters = new
+        {
+            RequestId = requestId,
+            ImageName = imageName
+        };
+
+        await _dapperContext.Command<DbRequest>(new QueryObject(SqlScripts.UpdateAfterImageById, parameters));
+    }
 }

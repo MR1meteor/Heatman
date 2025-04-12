@@ -1,6 +1,6 @@
 ﻿namespace RequestService.Models.Dtos;
 
-public record CreateRequestByExcel
+public record UploadFileRequest
 {
     public byte[] FileBytes { get; set; } = [];
 }

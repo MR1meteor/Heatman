@@ -18,4 +18,6 @@ public class Request
     public DateTime? CompletionTime { get; set; }
     public Guid BrigadeId { get; set; }
     public string GeoTag { get; set; } = string.Empty;
+    public string BeforeImage { get; set; } = string.Empty;
+    public string AfterImage { get; set; } = string.Empty;
 }

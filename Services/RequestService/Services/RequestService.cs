@@ -14,12 +14,17 @@ public class RequestService : IRequestService
     private readonly IRequestRepository _requestRepository;
     private readonly IBrigadeServiceClient _brigadeServiceClient;
     private readonly IExcelRequestParser _excelRequestParser;
+    private readonly IFileServiceClient _fileServiceClient;
     
-    public RequestService(IRequestRepository requestRepository, IBrigadeServiceClient brigadeServiceClient, IExcelRequestParser excelRequestParser)
+    public RequestService(IRequestRepository requestRepository,
+        IBrigadeServiceClient brigadeServiceClient,
+        IExcelRequestParser excelRequestParser,
+        IFileServiceClient fileServiceClient)
     {
         _requestRepository = requestRepository;
         _brigadeServiceClient = brigadeServiceClient;
         _excelRequestParser = excelRequestParser;
+        _fileServiceClient = fileServiceClient;
     }
 
     public async Task<List<Request>> GetPersonalAsync()
@@ -103,5 +108,31 @@ public class RequestService : IRequestService
     public Task<bool> SetCompletedStatusAsync(Guid requestId)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<bool> UploadBeforeFileAsync(Guid requestId, byte[] fileBytes)
+    {
+        var uploadFileResult = await _fileServiceClient.UploadFileAsync(fileBytes);
+
+        if (uploadFileResult.IsFailure || uploadFileResult.Data == null)
+        {
+            return false;
+        }
+
+        await _requestRepository.SetBeforeImageAsync(requestId, uploadFileResult.Data);
+        return true;
+    }
+
+    public async Task<bool> UploadAfterFileAsync(Guid requestId, byte[] fileBytes)
+    {
+        var uploadFileResult = await _fileServiceClient.UploadFileAsync(fileBytes);
+
+        if (uploadFileResult.IsFailure || uploadFileResult.Data == null)
+        {
+            return false;
+        }
+
+        await _requestRepository.SetAfterImageAsync(requestId, uploadFileResult.Data);
+        return true;
     }
 }

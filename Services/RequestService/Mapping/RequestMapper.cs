@@ -25,7 +25,9 @@ public static class RequestMapper
                 CreationTime = db.CreationTime,
                 WorkTime = db.WorkTime,
                 CompletionTime = db.CompletionTime,
-                BrigadeId = db.BrigadeId
+                BrigadeId = db.BrigadeId,
+                BeforeImage = db.BeforeImage,
+                AfterImage = db.AfterImage
             };
     }
 
@@ -54,7 +56,9 @@ public static class RequestMapper
                 CreationTime = request.CreationTime,
                 WorkTime = request.WorkTime,
                 CompletionTime = request.CompletionTime,
-                GeoTag = request.GeoTag
+                GeoTag = request.GeoTag,
+                BeforeImage = request.BeforeImage,
+                AfterImage = request.AfterImage
             };
     }
 

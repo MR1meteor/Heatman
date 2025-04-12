@@ -84,11 +84,33 @@ namespace RequestService.DataAccess.Repositories.Sql.Request {
         
         /// <summary>
         ///   Looks up a localized string similar to INSERT INTO requests (city, street, house, room, flat, device, status, type, creation_time, work_time, completion_time, brigade_id, geotag)
-        ///VALUES (@City, @Street, @House, @Room, @Flat, @Device, @Status, @CreationTime, @WorkTime, @CompletionTime, @BrigadeId, @GeoTag).
+        ///VALUES (@City, @Street, @House, @Room, @Flat, @Device, @Status, @Type, @CreationTime, @WorkTime, @CompletionTime, @BrigadeId, @GeoTag).
         /// </summary>
         internal static string Insert {
             get {
                 return ResourceManager.GetString("Insert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE requests
+        ///SET after_image = @ImageName
+        ///WHERE id = @RequestId.
+        /// </summary>
+        internal static string UpdateAfterImageById {
+            get {
+                return ResourceManager.GetString("UpdateAfterImageById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE requests
+        ///SET before_image = @ImageName
+        ///WHERE id = @RequestId.
+        /// </summary>
+        internal static string UpdateBeforeImageById {
+            get {
+                return ResourceManager.GetString("UpdateBeforeImageById", resourceCulture);
             }
         }
     }
