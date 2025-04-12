@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shared.Controllers;
 
 namespace BrigadeService.Controllers;
 

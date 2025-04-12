@@ -1,6 +1,7 @@
 ﻿using BrigadeService.Models.Requests;
 using BrigadeService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Controllers;
 
 namespace BrigadeService.Controllers;
 
@@ -26,8 +27,7 @@ public class BrigadeController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetPersonalId()
     {
-        Console.WriteLine($"TEST: {User1Id}, {User2Id}");
-        var result = await _brigadeService.GetIdByUserIds(User1Id, User2Id);
+        var result = await _brigadeService.GetIdByUserIds(FirstUserId, SecondUserId);
         
         return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Error);
     }

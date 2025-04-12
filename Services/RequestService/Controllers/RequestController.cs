@@ -1,8 +1,8 @@
-﻿using System.Text.Json;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RequestService.Models.Dtos;
 using RequestService.Services.Interfaces;
+using Shared.Controllers;
 
 namespace RequestService.Controllers;
 
@@ -21,9 +21,6 @@ public class RequestController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetByToken()
     {
-        Console.WriteLine($"TESTTT2: {JsonSerializer.Serialize(HttpContext.User.Claims.Select(c => { return new { c.Type, c.Value };}))}");
-        Console.WriteLine($"TESTTTTTTTTTT: {User1Id}, {User2Id}");
-        
         var response = await _requestService.GetPersonalAsync();
         
         return Ok(response);
