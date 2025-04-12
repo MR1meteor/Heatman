@@ -26,9 +26,10 @@ public class BrigadeServiceClient : IBrigadeServiceClient
 
         if (string.IsNullOrWhiteSpace(token))
         {
-            Console.WriteLine($"TESTT: {token}");
+            // Console.WriteLine($"TESTT: {token}");
         }
 
+        Console.WriteLine($"TESTT: {token}");
         var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/api/brigade");
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
         
