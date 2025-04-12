@@ -58,7 +58,9 @@ public class Startup
         app.UseSwagger();
         app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "auth"); });
         app.UseHttpsRedirection();
+        app.UseAuthentication();
         app.UseRouting();
+        app.UseAuthorization();
         app.UseEndpoints(endpoint => { endpoint.MapControllers(); });
     }
 }
