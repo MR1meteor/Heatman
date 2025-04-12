@@ -14,6 +14,14 @@ public class RequestController : BaseController
     {
         _requestService = requestService;
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetByToken()
+    {
+        var response = await _requestService.GetPersonalAsync();
+        
+        return Ok(response);
+    }
     
     [HttpGet("{brigadeId:guid}")]
     public async Task<IActionResult> GetByBrigade([FromRoute] Guid brigadeId)

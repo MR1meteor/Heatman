@@ -59,4 +59,24 @@ public class BrigadeService : IBrigadeService
         
         return Result<Guid>.Success(brigadeId.Value);
     }
+
+    public async Task<Result<Guid>> GetIdByUserIds(string firstUserId, string secondUserId)
+    {
+        if (string.IsNullOrWhiteSpace(firstUserId) || string.IsNullOrWhiteSpace(secondUserId))
+        {
+            return Result<Guid>.Failure("Validation error");
+        }
+        
+        var firstGuid = Guid.Parse(firstUserId);
+        var secondGuid = Guid.Parse(secondUserId);
+        
+        var brigadeId = await _brigadeRepository.GetTodayByEmployeeIdsAsync([firstGuid, secondGuid]);
+
+        if (brigadeId == null || brigadeId == Guid.Empty)
+        {
+            return Result<Guid>.Failure("Brigade not found");
+        }
+        
+        return Result<Guid>.Success(brigadeId.Value);
+    }
 }

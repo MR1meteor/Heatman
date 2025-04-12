@@ -24,4 +24,16 @@ public class BrigadeRepository : IBrigadeRepository
 
         return await _dapperContext.CommandWithResponse<Guid>(new QueryObject(SqlScripts.Insert, parameters));
     }
+
+    public async Task<Guid?> GetTodayByEmployeeIdsAsync(IEnumerable<Guid> employeeIds)
+    {
+        var parameters = new
+        {
+            EmployeeIds = employeeIds,
+            StartDate = DateTime.UtcNow.Date,
+            EndDate = DateTime.UtcNow.Date.AddDays(1),
+        };
+
+        return await _dapperContext.FirstOrDefault<Guid>(new QueryObject(SqlScripts.GetTodayByEmployeeIds, parameters));
+    }
 }

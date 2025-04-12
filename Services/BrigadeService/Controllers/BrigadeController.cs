@@ -22,4 +22,12 @@ public class BrigadeController : BaseController
 
         return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Error);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPersonalId()
+    {
+        var result = await _brigadeService.GetIdByUserIds(User1Id, User2Id);
+        
+        return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Error);
+    }
 }
