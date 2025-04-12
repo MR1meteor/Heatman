@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Headers;
+using System.Text.Json;
 using RequestService.Clients.Interfaces;
 using Shared.ResultPattern.Models;
 
@@ -9,17 +10,29 @@ public class BrigadeServiceClient : IBrigadeServiceClient
     private readonly string _baseUrl;
     private readonly ILogger<BrigadeServiceClient> _logger;
     private readonly HttpClient _httpClient;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public BrigadeServiceClient(IConfiguration configuration, IHttpClientFactory httpClientFactory, ILogger<BrigadeServiceClient> logger)
+    public BrigadeServiceClient(IConfiguration configuration, HttpClient httpClient, ILogger<BrigadeServiceClient> logger, IHttpContextAccessor httpContextAccessor)
     {
         _baseUrl = configuration.GetSection("Cluster")["BrigadeServiceUrl"];
-        _httpClient = httpClientFactory.CreateClient("ClusterHttpClient");
+        _httpClient = httpClient;
         _logger = logger;
+        _httpContextAccessor = httpContextAccessor;
     }
     
     public async Task<Result<Guid>> GetPersonalBrigadeId()
     {
-        var response = await _httpClient.GetAsync($"{_baseUrl}/api/brigade");
+        var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"] ?? string.Empty;
+
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            _logger.LogError("Token is empty");
+        }
+
+        var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/api/brigade");
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        
+        var response = await _httpClient.SendAsync(request);
         var responseContent = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
