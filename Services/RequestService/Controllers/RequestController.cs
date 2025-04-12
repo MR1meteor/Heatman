@@ -22,6 +22,7 @@ public class RequestController : BaseController
     public async Task<IActionResult> GetByToken()
     {
         Console.WriteLine($"TESTTT2: {JsonSerializer.Serialize(HttpContext.User.Claims.Select(c => { return new { c.Type, c.Value };}))}");
+        Console.WriteLine($"TESTTTTTTTTTT: {User1Id}, {User2Id}");
         
         var response = await _requestService.GetPersonalAsync();
         
