@@ -42,6 +42,7 @@ public class Startup
 
 
         services.AddHttpContextAccessor();
+        services.AddTransient<HttpContextDelegatingHandler>();
         services.AddHttpClient("ClusterHttpClient")
             .AddHttpMessageHandler<HttpContextDelegatingHandler>();
         

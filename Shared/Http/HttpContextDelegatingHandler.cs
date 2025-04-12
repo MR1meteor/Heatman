@@ -4,7 +4,7 @@ using Shared.DependencyInjection.Interfaces;
 
 namespace Shared.Http;
 
-public class HttpContextDelegatingHandler : DelegatingHandler, ITransient
+public class HttpContextDelegatingHandler : DelegatingHandler
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
