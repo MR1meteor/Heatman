@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using AuthService.Clients.Interfaces;
+using AuthService.Models.Requests;
 using Shared.ResultPattern.Models;
 
 namespace AuthService.Clients;
@@ -18,9 +19,14 @@ public class BrigadeServiceClient : IBrigadeServiceClient
         _logger = logger;
     }
     
-    public async Task<Result<Guid>> CreateTodayAsync()
+    public async Task<Result<Guid>> CreateTodayAsync(CreateTodayBrigadeRequest? request)
     {
-        var json = JsonSerializer.Serialize(new { });
+        if (request == null)
+        {
+            return Result<Guid>.Failure("Invalid validation");
+        }
+
+        var json = JsonSerializer.Serialize(request);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         var response = await _httpClient.PostAsync($"{_baseUrl}/api/brigade", content);
         var responseContent = await response.Content.ReadAsStringAsync();

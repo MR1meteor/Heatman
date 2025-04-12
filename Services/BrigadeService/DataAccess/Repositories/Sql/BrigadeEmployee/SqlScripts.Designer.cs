@@ -65,8 +65,8 @@ namespace BrigadeService.DataAccess.Repositories.Sql.BrigadeEmployee {
         ///        WHEN EXISTS (
         ///            SELECT 1
         ///            FROM brigade_employees be
-        ///            JOIN brigades b ON be.drigade_id = b.id
-        ///            WHERE b.creation_date BETWEEN @StartDate AND @EndDate AND be.employee_id in (@EmployeeIds)
+        ///            JOIN brigades b ON be.brigade_id = b.id
+        ///            WHERE b.creation_date BETWEEN @StartDate AND @EndDate AND be.employee_id = any(@EmployeeIds)
         ///        )
         ///        THEN CAST(1 AS BIT)
         ///        ELSE CAST(0 AS BIT)
@@ -76,6 +76,15 @@ namespace BrigadeService.DataAccess.Repositories.Sql.BrigadeEmployee {
         internal static string ExistsTodayByEmployees {
             get {
                 return ResourceManager.GetString("ExistsTodayByEmployees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Insert {
+            get {
+                return ResourceManager.GetString("Insert", resourceCulture);
             }
         }
     }

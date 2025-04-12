@@ -5,6 +5,7 @@ using AuthService.Clients.Interfaces;
 using AuthService.DataAccess.Repositories.Interfaces;
 using AuthService.Mapping;
 using AuthService.Models.Domain;
+using AuthService.Models.Requests;
 using AuthService.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
@@ -44,7 +45,7 @@ public class AuthService : IAuthService
         }
         
         // TODO: Взаимодействие с МКС бригад: создание бригады на текущий день, проверка на присутствие кого-то уже в бригаде
-        var createBrigadeResponse = await _brigadeServiceClient.CreateTodayAsync();
+        var createBrigadeResponse = await _brigadeServiceClient.CreateTodayAsync(new CreateTodayBrigadeRequest {FirstUserId = firstUser.Id, SecondUserId = secondUser.Id});
 
         return !createBrigadeResponse.IsSuccess ? string.Empty : GenerateJwtToken(firstUser.MapToDomain(), secondUser.MapToDomain());
     }

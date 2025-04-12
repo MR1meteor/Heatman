@@ -1,5 +1,6 @@
 ﻿using BrigadeService.DataAccess.Repositories.Interfaces;
 using BrigadeService.DataAccess.Repositories.Sql.BrigadeEmployee;
+using BrigadeService.Models.Db;
 using Shared.Dapper;
 using Shared.Dapper.Interfaces;
 
@@ -14,8 +15,13 @@ public class BrigadeEmployeeRepository : IBrigadeEmployeeRepository
         _dapperContext = dapperContext;
     }
     
-    public async Task<bool> ExistsTodayByEmployeesAsync(IEnumerable<Guid> employeeIds)
+    public async Task<bool> ExistsTodayByEmployeesAsync(IEnumerable<Guid>? employeeIds)
     {
+        if (employeeIds == null || !employeeIds.Any())
+        {
+            return false;
+        }
+        
         var parameters = new
         {
             StartDate = DateTime.UtcNow.Date,
@@ -24,5 +30,21 @@ public class BrigadeEmployeeRepository : IBrigadeEmployeeRepository
         };
 
         return await _dapperContext.CommandWithResponse<bool>(new QueryObject(SqlScripts.ExistsTodayByEmployees, parameters));
+    }
+
+    public async Task InsertAsync(DbBrigadeEmployee? employee)
+    {
+        if (employee == null)
+        {
+            return;
+        }
+        
+        var parameters = new
+        {
+            BrigadeId = employee.BrigadeId,
+            EmployeeId = employee.EmployeeId
+        };
+        
+        await _dapperContext.Command<DbBrigadeEmployee>(new QueryObject(SqlScripts.Insert, parameters));
     }
 }

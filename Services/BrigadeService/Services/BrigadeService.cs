@@ -1,4 +1,6 @@
 ﻿using BrigadeService.DataAccess.Repositories.Interfaces;
+using BrigadeService.Mapping;
+using BrigadeService.Models.Domain;
 using BrigadeService.Services.Interfaces;
 using Shared.ResultPattern.Models;
 
@@ -31,6 +33,29 @@ public class BrigadeService : IBrigadeService
 
         var brigadeId = await _brigadeRepository.CreateTodayAsync();
 
-        return brigadeId == null ? Result<Guid>.Failure("Database error") : Result<Guid>.Success(brigadeId.Value);
+        if (brigadeId == null)
+        {
+            return Result<Guid>.Failure("Database error");
+        }
+
+        var brigadeEmployees = new List<BrigadeEmployee>
+        {
+            new BrigadeEmployee
+            {
+                BrigadeId = brigadeId.Value,
+                EmployeeId = firstUserId.Value
+            },
+            new BrigadeEmployee
+            {
+                BrigadeId = brigadeId.Value,
+                EmployeeId = secondUserId.Value
+            }
+        };
+
+        var insertBrigadeEmployeesTasks = brigadeEmployees.Select(employee => _brigadeEmployeeRepository.InsertAsync(employee.MapToDb()));
+
+        await Task.WhenAll(insertBrigadeEmployeesTasks);
+        
+        return Result<Guid>.Success(brigadeId.Value);
     }
 }
