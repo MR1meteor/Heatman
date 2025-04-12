@@ -42,7 +42,7 @@ public class RequestController : BaseController
         return Ok(response);
     }
 
-    [HttpPost]
+    [HttpPost("by-excel")]
     public async Task<IActionResult> CreateByExcel([FromBody] byte[] fileBytes)
     {
         var response = await _requestService.CreateByExcelFileAsync(fileBytes);
