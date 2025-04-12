@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RequestService.Models.Dtos;
 using RequestService.Services.Interfaces;
 
@@ -15,6 +16,7 @@ public class RequestController : BaseController
         _requestService = requestService;
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetByToken()
     {
