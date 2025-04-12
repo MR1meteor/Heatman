@@ -6,10 +6,10 @@ namespace FileService.Services;
 
 public class MinioService : IMinioService
 {
-    private readonly MinioClient _minioClient;
+    private readonly IMinioClient _minioClient;
     private readonly string _bucket;
 
-    public MinioService(IConfiguration config, MinioClient minioClient)
+    public MinioService(IConfiguration config, IMinioClient minioClient)
     {
         _minioClient = minioClient;
         _bucket = config["Minio:BucketName"]!;
