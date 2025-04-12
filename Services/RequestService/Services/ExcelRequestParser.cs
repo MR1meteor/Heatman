@@ -8,15 +8,15 @@ public class ExcelRequestParser : IExcelRequestParser
 {
     public List<ExcelRequest> GetExcelRequestsAsync(byte[] fileBytes)
     {
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
         if (fileBytes == null || fileBytes.Length == 0 || !IsExcelFile(fileBytes))
         {
             return [];
         }
         
         var requests = new List<ExcelRequest>();
-
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
+        
         using var stream = new MemoryStream(fileBytes);
         using var package = new ExcelPackage(stream);
         
