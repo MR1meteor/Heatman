@@ -1,8 +1,8 @@
 ﻿using RequestService.Models.Enums;
 
-namespace RequestService.Models.Domain;
+namespace RequestService.Models.Dtos;
 
-public class Request
+public record GetRequest
 {
     public Guid Id { get; set; }
     public string City { get; set; } = string.Empty;
@@ -15,6 +15,7 @@ public class Request
     public DateTime CreationTime { get; set; }
     public DateTime WorkTime { get; set; }
     public DateTime CompletionTime { get; set; }
-    public Guid BrigadeId { get; set; }
     public string GeoTag { get; set; } = string.Empty;
+    public string BeforeImage { get; set; } = string.Empty;
+    public string AfterImage { get; set; } = string.Empty;
 }

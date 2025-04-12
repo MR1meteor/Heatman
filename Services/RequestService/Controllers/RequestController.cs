@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RequestService.Mapping;
 using RequestService.Models.Dtos;
 using RequestService.Services.Interfaces;
 using Shared.Controllers;
@@ -23,7 +24,7 @@ public class RequestController : BaseController
     {
         var response = await _requestService.GetPersonalAsync();
         
-        return Ok(response);
+        return Ok(response.MapToDto());
     }
     
     [HttpGet("{brigadeId:guid}")]

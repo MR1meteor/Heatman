@@ -1,5 +1,6 @@
 ﻿using RequestService.Models.Db;
 using RequestService.Models.Domain;
+using RequestService.Models.Dtos;
 using RequestService.Models.Enums;
 
 namespace RequestService.Mapping;
@@ -13,7 +14,10 @@ public static class RequestMapper
             : new Request
             {
                 Id = db.Id,
-                Address = db.Address,
+                City = db.City,
+                Street = db.Street,
+                Room = db.Room,
+                Flat = db.Flat,
                 Device = db.Device,
                 Status = (RequestStatus)db.Status,
                 Type = (RequestType)db.Type,
@@ -29,5 +33,33 @@ public static class RequestMapper
        return db == null || !db.Any()
             ? []
             : db.Where(single => single != null).Select(MapToDomain).ToList();
+    }
+
+    public static GetRequest MapToDto(this Request? request)
+    {
+        return request == null
+            ? new GetRequest()
+            : new GetRequest
+            {
+                Id = request.Id,
+                City = request.City,
+                Street = request.Street,
+                Room = request.Room,
+                Flat = request.Flat,
+                Device = request.Device,
+                Status = request.Status,
+                Type = request.Type,
+                CreationTime = request.CreationTime,
+                WorkTime = request.WorkTime,
+                CompletionTime = request.CompletionTime,
+                GeoTag = request.GeoTag
+            };
+    }
+
+    public static List<GetRequest> MapToDto(this IEnumerable<Request?>? domain)
+    {
+        return domain == null || !domain.Any()
+            ? []
+            : domain.Where(single => single != null).Select(MapToDto).ToList();
     }
 }
