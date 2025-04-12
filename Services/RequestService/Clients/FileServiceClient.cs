@@ -30,7 +30,7 @@ public class FileServiceClient : IFileServiceClient
         
         content.Add(fileContent, "file", fileName);
 
-        var response = await _httpClient.PostAsync(_baseUrl, content);
+        var response = await _httpClient.PostAsync($"{_baseUrl}/api/file", content);
         var responseContent = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
