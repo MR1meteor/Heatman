@@ -1,8 +1,10 @@
 ﻿using RequestService.Clients.Interfaces;
 using RequestService.DataAccess.Repositories.Interfaces;
 using RequestService.Mapping;
+using RequestService.Models.Db;
 using RequestService.Models.Domain;
 using RequestService.Models.Dtos;
+using RequestService.Models.Enums;
 using RequestService.Services.Interfaces;
 
 namespace RequestService.Services;
@@ -11,11 +13,13 @@ public class RequestService : IRequestService
 {
     private readonly IRequestRepository _requestRepository;
     private readonly IBrigadeServiceClient _brigadeServiceClient;
+    private readonly IExcelRequestParser _excelRequestParser;
     
-    public RequestService(IRequestRepository requestRepository, IBrigadeServiceClient brigadeServiceClient)
+    public RequestService(IRequestRepository requestRepository, IBrigadeServiceClient brigadeServiceClient, IExcelRequestParser excelRequestParser)
     {
         _requestRepository = requestRepository;
         _brigadeServiceClient = brigadeServiceClient;
+        _excelRequestParser = excelRequestParser;
     }
 
     public async Task<List<Request>> GetPersonalAsync()
@@ -28,9 +32,72 @@ public class RequestService : IRequestService
     public async Task<List<Request>> GetByBrigadeAsync(Guid brigadeId) =>
         (await _requestRepository.GetByBrigadeAsync(brigadeId)).MapToDomain();
 
-    public Task<bool> CreateAsync(CreateNewRequest request)
+    public async Task<bool> CreateAsync(CreateNewRequest request)
     {
-        throw new NotImplementedException();
+        var brigadeId = await _brigadeServiceClient.GetPersonalBrigadeId();
+
+        if (brigadeId.IsFailure)
+        {
+            return false;
+        }
+
+        var dbRequest = new DbRequest
+        {
+            Id = Guid.NewGuid(),
+            City = request.City,
+            Street = request.Street,
+            House = request.House,
+            Room = request.Room,
+            Flat = request.Flat,
+            Device = request.Device,
+            Status = (int)RequestStatus.InWork,
+            Type = (int)request.Type,
+            CreationTime = DateTime.UtcNow,
+            WorkTime = null,
+            CompletionTime = null,
+            BrigadeId = brigadeId.Data,
+            GeoTag = string.Empty
+        };
+
+        await _requestRepository.AddAsync(dbRequest);
+        return true;
+    }
+
+    public async Task<bool> CreateByExcelFileAsync(byte[] fileBytes)
+    {
+        var brigadeId = await _brigadeServiceClient.GetPersonalBrigadeId();
+
+        if (brigadeId.IsFailure)
+        {
+            return false;
+        }
+        
+        var excelRequests = _excelRequestParser.GetExcelRequestsAsync(fileBytes);
+
+        if (excelRequests.Count == 0)
+        {
+            return false;
+        }
+
+        var dbRequests = excelRequests.Select(request => new DbRequest
+        {
+            Id = Guid.NewGuid(),
+            City = request.City,
+            Street = request.Street,
+            House = request.House,
+            Room = request.Room,
+            Flat = request.Flat,
+            Device = request.Device,
+            Status = (int)RequestStatus.InWork,
+            CreationTime = DateTime.UtcNow,
+            WorkTime = null,
+            CompletionTime = null,
+            BrigadeId = brigadeId.Data,
+            GeoTag = string.Empty
+        });
+
+        await _requestRepository.AddAsync(dbRequests);
+        return true;
     }
 
     public Task<bool> SetCompletedStatusAsync(Guid requestId)

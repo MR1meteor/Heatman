@@ -38,6 +38,15 @@ public class RequestController : BaseController
     public async Task<IActionResult> Create([FromBody] CreateNewRequest request)
     {
         var response = await _requestService.CreateAsync(request);
+        
+        return Ok(response);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateByExcel([FromBody] byte[] fileBytes)
+    {
+        var response = await _requestService.CreateByExcelFileAsync(fileBytes);
+
         return Ok(response);
     }
 

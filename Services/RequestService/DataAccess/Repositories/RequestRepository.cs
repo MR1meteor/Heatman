@@ -24,4 +24,33 @@ public class RequestRepository : IRequestRepository
 
         return await _dapperContext.ListOrEmpty<DbRequest>(new QueryObject(SqlScripts.GetByBrigade, parameters)) ?? [];
     }
+
+    public async Task AddAsync(DbRequest request)
+    {
+        var parameters = new
+        {
+            City = request.City,
+            Street = request.Street,
+            House = request.House,
+            Room = request.Room,
+            Flat = request.Flat,
+            Device = request.Device,
+            Status = request.Status,
+            Type = request.Type,
+            CreationTime = request.CreationTime,
+            WorkTime = request.WorkTime,
+            CompletionTime = request.CompletionTime,
+            BrigadeId = request.BrigadeId,
+            GeoTag = request.GeoTag
+        };
+
+        await _dapperContext.Command<DbRequest>(new QueryObject(SqlScripts.Insert, parameters));
+    }
+
+    public async Task AddAsync(IEnumerable<DbRequest> requests)
+    {
+        var insertTasks = requests.Select(AddAsync);
+        
+        await Task.WhenAll(insertTasks);
+    }
 }

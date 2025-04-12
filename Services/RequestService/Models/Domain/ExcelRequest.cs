@@ -1,8 +1,6 @@
-﻿using RequestService.Models.Enums;
+﻿namespace RequestService.Models.Domain;
 
-namespace RequestService.Models.Dtos;
-
-public record CreateNewRequest
+public class ExcelRequest
 {
     public string City { get; set; } = string.Empty;
     public string Street { get; set; } = string.Empty;
@@ -10,5 +8,7 @@ public record CreateNewRequest
     public string Flat { get; set; } = string.Empty;
     public string Room { get; set; } = string.Empty;
     public string Device { get; set; } = string.Empty;
-    public RequestType Type { get; set; }
+    public string WorkType { get; set; } = string.Empty;
+    public string Inspector1 { get; set; } = string.Empty;
+    public string Inspector2 { get; set; } = string.Empty;
 }

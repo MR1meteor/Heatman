@@ -9,5 +9,6 @@ public interface IRequestService : ITransient
     Task<List<Request>> GetPersonalAsync();
     Task<List<Request>> GetByBrigadeAsync(Guid brigadeId);
     Task<bool> CreateAsync(CreateNewRequest request);
+    Task<bool> CreateByExcelFileAsync(byte[] fileBytes);
     Task<bool> SetCompletedStatusAsync(Guid requestId);
 }

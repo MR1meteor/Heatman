@@ -61,20 +61,34 @@ namespace RequestService.DataAccess.Repositories.Sql.Request {
         
         /// <summary>
         ///   Looks up a localized string similar to SELECT id AS &quot;Id&quot;,
-        ///       address AS &quot;Address&quot;,
+        ///       city AS &quot;City&quot;,
+        ///       street AS &quot;Street&quot;,
+        ///       room AS &quot;Room&quot;,
+        ///       flat AS &quot;Flat&quot;,
         ///       device AS &quot;Device&quot;,
         ///       status AS &quot;Status&quot;,
         ///       type AS &quot;Type&quot;,
         ///       creation_time AS &quot;CreationTime&quot;,
         ///       work_time AS &quot;WorkTime&quot;,
         ///       completion_time AS &quot;CompletionTime&quot;,
-        ///       brigade_id AS &quot;BrigadeId&quot;
+        ///       brigade_id AS &quot;BrigadeId&quot;,
+        ///       geotag AS &quot;GeoTag&quot;
         ///FROM requests
         ///WHERE brigade_id = @BrigadeId.
         /// </summary>
         internal static string GetByBrigade {
             get {
                 return ResourceManager.GetString("GetByBrigade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO requests (city, street, house, room, flat, device, status, type, creation_time, work_time, completion_time, brigade_id, geotag)
+        ///VALUES (@City, @Street, @House, @Room, @Flat, @Device, @Status, @CreationTime, @WorkTime, @CompletionTime, @BrigadeId, @GeoTag).
+        /// </summary>
+        internal static string Insert {
+            get {
+                return ResourceManager.GetString("Insert", resourceCulture);
             }
         }
     }
