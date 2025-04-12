@@ -1,4 +1,5 @@
-﻿using BrigadeService.Models.Requests;
+﻿using System.Text.Json;
+using BrigadeService.Models.Requests;
 using BrigadeService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Controllers;
@@ -27,6 +28,9 @@ public class BrigadeController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetPersonalId()
     {
+        Console.WriteLine($"Claims: {JsonSerializer.Serialize(HttpContext.User.Claims.Select(c => new { c.Type, c.Value }))}");
+        Console.WriteLine($"TEST: {FirstUserId}, {SecondUserId}");
+        
         var result = await _brigadeService.GetIdByUserIds(FirstUserId, SecondUserId);
         
         return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Error);
