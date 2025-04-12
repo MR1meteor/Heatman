@@ -10,10 +10,10 @@ public class BrigadeServiceClient : IBrigadeServiceClient
     private readonly ILogger<BrigadeServiceClient> _logger;
     private readonly HttpClient _httpClient;
 
-    public BrigadeServiceClient(IConfiguration configuration, HttpClient httpClient, ILogger<BrigadeServiceClient> logger)
+    public BrigadeServiceClient(IConfiguration configuration, IHttpClientFactory httpClientFactory, ILogger<BrigadeServiceClient> logger)
     {
         _baseUrl = configuration.GetSection("Cluster")["BrigadeServiceUrl"];
-        _httpClient = httpClient;
+        _httpClient = httpClientFactory.CreateClient("ClusterHttpClient");
         _logger = logger;
     }
     
