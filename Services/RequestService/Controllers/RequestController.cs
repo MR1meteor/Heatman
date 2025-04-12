@@ -18,6 +18,8 @@ public class RequestController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetByToken()
     {
+        Console.WriteLine($"TESTTT2: {User1Id}, {User2Id}");
+        
         var response = await _requestService.GetPersonalAsync();
         
         return Ok(response);
