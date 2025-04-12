@@ -14,7 +14,7 @@ public class BaseController : ControllerBase
             return;
         }
         
-        User1Id = HttpContext.User.Claims.FirstOrDefault(c => c.Type.ToUpper().Equals("USER1ID"))?.Value ?? string.Empty;
-        User2Id = HttpContext.User.Claims.FirstOrDefault(c => c.Type.ToUpper().Equals("USER2ID"))?.Value ?? string.Empty;
+        User1Id = HttpContext.User.Claims.FirstOrDefault(c => c.Type.Equals("User1Id", StringComparison.OrdinalIgnoreCase))?.Value ?? string.Empty;
+        User2Id = HttpContext.User.Claims.FirstOrDefault(c => c.Type.Equals("User2Id", StringComparison.OrdinalIgnoreCase))?.Value ?? string.Empty;
     }
 }
