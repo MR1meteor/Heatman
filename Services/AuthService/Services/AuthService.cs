@@ -26,7 +26,7 @@ public class AuthService : IAuthService
     
     public async Task<string> LoginByVerificationCodesAsync(string firstCode, string secondCode)
     {
-        if (string.IsNullOrWhiteSpace(firstCode) || string.IsNullOrWhiteSpace(secondCode))
+        if (string.IsNullOrWhiteSpace(firstCode) || string.IsNullOrWhiteSpace(secondCode) || firstCode == secondCode)
         {
             return string.Empty;
         }
