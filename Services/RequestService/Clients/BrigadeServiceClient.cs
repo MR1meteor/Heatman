@@ -26,7 +26,7 @@ public class BrigadeServiceClient : IBrigadeServiceClient
 
         if (string.IsNullOrWhiteSpace(token))
         {
-            _logger.LogError("Token is empty");
+            Console.WriteLine($"TESTT: {token}");
         }
 
         var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/api/brigade");
