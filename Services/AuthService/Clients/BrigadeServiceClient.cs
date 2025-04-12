@@ -40,4 +40,19 @@ public class BrigadeServiceClient : IBrigadeServiceClient
         var createdBrigadeGuid = JsonSerializer.Deserialize<Guid>(responseContent);
         return Result<Guid>.Success(createdBrigadeGuid);
     }
+
+    public async Task<Result<Guid>> GetTodayByUsersAsync(Guid firstUserId, Guid secondUserId)
+    {
+        var response = await _httpClient.GetAsync($"{_baseUrl}/api/brigade?firstUserId={firstUserId}&secondUserId={secondUserId}");
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError($"brigade-service: get today by users returned {response.StatusCode}: {responseContent}");
+            return Result<Guid>.Failure($"Microservice request failure: {responseContent}");
+        }
+        
+        var brigadeGuid = JsonSerializer.Deserialize<Guid>(responseContent);
+        return Result<Guid>.Success(brigadeGuid);
+    }
 }

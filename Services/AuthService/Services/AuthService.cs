@@ -45,6 +45,13 @@ public class AuthService : IAuthService
         }
         
         // TODO: Взаимодействие с МКС бригад: создание бригады на текущий день, проверка на присутствие кого-то уже в бригаде
+        var existingBrigade = await _brigadeServiceClient.GetTodayByUsersAsync(firstUser.Id, secondUser.Id);
+
+        if (existingBrigade.IsSuccess && existingBrigade.Data != Guid.Empty)
+        {
+            return GenerateJwtToken(firstUser.MapToDomain(), secondUser.MapToDomain());
+        }
+        
         var createBrigadeResponse = await _brigadeServiceClient.CreateTodayAsync(new CreateTodayBrigadeRequest {FirstUserId = firstUser.Id, SecondUserId = secondUser.Id});
 
         return !createBrigadeResponse.IsSuccess ? string.Empty : GenerateJwtToken(firstUser.MapToDomain(), secondUser.MapToDomain());
