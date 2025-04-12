@@ -29,7 +29,7 @@ public class BrigadeRepository : IBrigadeRepository
     {
         var parameters = new
         {
-            EmployeeIds = employeeIds,
+            EmployeeIds = employeeIds.ToArray(),
             StartDate = DateTime.UtcNow.Date,
             EndDate = DateTime.UtcNow.Date.AddDays(1),
         };
