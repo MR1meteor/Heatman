@@ -8,22 +8,26 @@ namespace AuthService.Clients;
 public class BrigadeServiceClient : IBrigadeServiceClient
 {
     private readonly string _baseUrl;
+    private readonly ILogger<BrigadeServiceClient> _logger;
     private readonly HttpClient _httpClient;
 
-    public BrigadeServiceClient(IConfiguration configuration, HttpClient httpClient)
+    public BrigadeServiceClient(IConfiguration configuration, HttpClient httpClient, ILogger<BrigadeServiceClient> logger)
     {
         _baseUrl = configuration.GetSection("Cluster")["BrigadeServiceUrl"];
         _httpClient = httpClient;
+        _logger = logger;
     }
     
     public async Task<Result<Guid>> CreateTodayAsync()
     {
-        var content = new StringContent(string.Empty, Encoding.UTF8, "application/json");
+        var json = JsonSerializer.Serialize(new { });
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
         var response = await _httpClient.PostAsync($"{_baseUrl}/api/brigade", content);
         var responseContent = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
         {
+            _logger.LogError($"brigade-service: create today returned {response.StatusCode}: {responseContent}");
             return Result<Guid>.Failure($"Microservice request failure: {responseContent}");
         }
 
