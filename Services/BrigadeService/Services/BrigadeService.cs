@@ -24,12 +24,13 @@ public class BrigadeService : IBrigadeService
             return Result<Guid>.Failure("Validation error");
         }
 
-        var isEmployeesBusy = await _brigadeEmployeeRepository.ExistsTodayByEmployeesAsync(new[] { firstUserId.Value, secondUserId.Value });
-
-        if (isEmployeesBusy)
-        {
-            return Result<Guid>.Failure("Employee(s) already in brigade(s)");
-        }
+        // TODO: Избавиться фулл
+        // var isEmployeesBusy = await _brigadeEmployeeRepository.ExistsTodayByEmployeesAsync(new[] { firstUserId.Value, secondUserId.Value });
+        //
+        // if (isEmployeesBusy)
+        // {
+        //     return Result<Guid>.Failure("Employee(s) already in brigade(s)");
+        // }
 
         var brigadeId = await _brigadeRepository.CreateTodayAsync();
 
