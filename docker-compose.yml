@@ -74,6 +74,7 @@ services:
         image: postgres:16
         volumes:
             - ./pg-init-scripts/:/docker-entrypoint-initdb.d
+            - postgres_data:/var/lib/postgresql/data
         restart: always
         environment:
             POSTGRES_USER: ${DB_USER}
@@ -88,3 +89,6 @@ services:
 networks:
     app-network:
         driver: bridge
+        
+volumes:
+    postgres_data:
