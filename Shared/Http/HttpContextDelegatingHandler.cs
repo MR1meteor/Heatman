@@ -1,9 +1,10 @@
 ﻿using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
+using Shared.DependencyInjection.Interfaces;
 
 namespace Shared.Http;
 
-public class HttpContextDelegatingHandler : DelegatingHandler
+public class HttpContextDelegatingHandler : DelegatingHandler, ITransient
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
