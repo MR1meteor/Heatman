@@ -26,6 +26,7 @@ public class BrigadeController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetPersonalId()
     {
+        Console.WriteLine($"TEST: {User1Id}, {User2Id}");
         var result = await _brigadeService.GetIdByUserIds(User1Id, User2Id);
         
         return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Error);
