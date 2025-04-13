@@ -132,7 +132,7 @@ public class ActsService : IActsService
             return string.Empty;
         }
 
-        var base64Act = _actFileProcessor.FillTemplateBase64(controlAct, "./../Models/Templates/act_control_template.docx");
+        var base64Act = _actFileProcessor.FillTemplateBase64(controlAct, Path.Combine(AppContext.BaseDirectory, "Models", "Templates", "act_control_template.docx"));
         var fileNameResult = await _fileServiceClient.UploadFileAsync(base64Act);
 
         if (fileNameResult.IsFailure || string.IsNullOrWhiteSpace(fileNameResult.Data))
