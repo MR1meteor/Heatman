@@ -75,7 +75,7 @@ services:
     report-service:
         build:
             context: .
-            dockerfile: ./Service/ReportService/Dockerfile
+            dockerfile: ./Services/ReportService/Dockerfile
         ports:
             - "5005:5005"
         environment:
