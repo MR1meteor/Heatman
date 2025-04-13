@@ -24,6 +24,8 @@ services:
             - auth-service
             - brigade-service
             - request-service
+            - report-service
+            - file-service
         restart: always
         networks:
             - app-network
@@ -107,7 +109,7 @@ services:
         environment:
             POSTGRES_USER: ${DB_USER}
             POSTGRES_PASSWORD: ${DB_PASSWORD}
-            POSTGRES_MULTIPLE_DATABASES: auth,brigade-service,request-service
+            POSTGRES_MULTIPLE_DATABASES: auth,brigade-service,request-service,report-service
             POSTGRES_MULTIPLE_EXTENSIONS: uuid-ossp
         ports:
             - "5432:5432"
