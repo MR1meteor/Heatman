@@ -17,9 +17,9 @@ public class Request
     public DateTime? WorkTime { get; set; }
     public DateTime? CompletionTime { get; set; }
     public Guid BrigadeId { get; set; }
-    public string GeoTag { get; set; }
-    public string BeforeImage { get; set; }
-    public string AfterImage { get; set; }
+    public string GeoTag { get; set; } = string.Empty;
+    public string BeforeImage { get; set; } = string.Empty;
+    public string AfterImage { get; set; } = string.Empty;
 
     public string Address => string.Join(", ", new[]
     {
