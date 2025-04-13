@@ -7,4 +7,5 @@ public interface IActsService : ITransient
 {
     Task<bool> CreateControlActAsync(CreateControlActRequest createControlActRequest);
     Task<bool> CreateStopResumeActAsync(CreateStopResumeActRequest createStopResumeActRequest);
+    Task<string> GetControlActAsync(Guid requestId);
 }

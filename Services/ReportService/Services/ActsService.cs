@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
-using ReportService.Clients.Interfaces;
+﻿using ReportService.Clients.Interfaces;
 using ReportService.DataAccess.Repositories.Interfaces;
+using ReportService.Mapping;
 using ReportService.Models.Db;
 using ReportService.Models.Dtos;
 using ReportService.Services.Interfaces;
@@ -14,18 +14,24 @@ public class ActsService : IActsService
     private readonly IAuthServiceClient _authServiceClient;
     private readonly IControlActRepository _controlActRepository;
     private readonly IStopResumeActRepository _stopResumeActRepository;
+    private readonly IActFileProcessor _actFileProcessor;
+    private readonly IFileServiceClient _fileServiceClient;
 
     public ActsService(IRequestServiceClient requestServiceClient,
         IBrigadeServiceClient brigadeServiceClient,
         IAuthServiceClient authServiceClient,
         IControlActRepository controlActRepository,
-        IStopResumeActRepository stopResumeActRepository)
+        IStopResumeActRepository stopResumeActRepository,
+        IActFileProcessor actFileProcessor,
+        IFileServiceClient fileServiceClient)
     {
         _requestServiceClient = requestServiceClient;
         _brigadeServiceClient = brigadeServiceClient;
         _authServiceClient = authServiceClient;
         _controlActRepository = controlActRepository;
         _stopResumeActRepository = stopResumeActRepository;
+        _actFileProcessor = actFileProcessor;
+        _fileServiceClient = fileServiceClient;
     }
     
     public async Task<bool> CreateControlActAsync(CreateControlActRequest createControlActRequest)
@@ -115,5 +121,26 @@ public class ActsService : IActsService
         
         await _stopResumeActRepository.InsertAsync(newDbAct);
         return true;
+    }
+
+    public async Task<string> GetControlActAsync(Guid requestId)
+    {
+        var controlAct = (await _controlActRepository.GetByRequestIdAsync(requestId)).MapToDomain();
+
+        if (controlAct == null)
+        {
+            return string.Empty;
+        }
+
+        var base64Act = _actFileProcessor.FillTemplateBase64(controlAct, "../Models/Templates/act_control_template.docx");
+        var fileNameResult = await _fileServiceClient.UploadFileAsync(base64Act);
+
+        if (fileNameResult.IsFailure || string.IsNullOrWhiteSpace(fileNameResult.Data))
+        {
+            return string.Empty;
+        }
+
+        var fileUrl = await _fileServiceClient.GetUrlAsync(fileNameResult.Data);
+        return fileUrl.IsSuccess ? fileUrl.Data : string.Empty;
     }
 }
