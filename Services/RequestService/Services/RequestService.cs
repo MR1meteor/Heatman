@@ -31,11 +31,64 @@ public class RequestService : IRequestService
     {
         var brigadeIdResult = await _brigadeServiceClient.GetPersonalBrigadeId();
 
-        return brigadeIdResult.IsFailure ? [] : (await _requestRepository.GetByBrigadeAsync(brigadeIdResult.Data)).MapToDomain();
+        if (brigadeIdResult.IsFailure)
+        {
+            return [];
+        }
+
+        var requests = await _requestRepository.GetByBrigadeAsync(brigadeIdResult.Data);
+        
+        await Task.WhenAll(requests.Select(async request =>
+        {
+            if (!string.IsNullOrWhiteSpace(request.BeforeImage))
+            {
+                var fileResponse = await _fileServiceClient.GetFileAsBase64Async(request.BeforeImage);
+                if (fileResponse.IsSuccess && !string.IsNullOrWhiteSpace(fileResponse.Data))
+                {
+                    request.BeforeImage = fileResponse.Data;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.AfterImage))
+            {
+                var fileResponse = await _fileServiceClient.GetFileAsBase64Async(request.AfterImage);
+                if (fileResponse.IsSuccess && !string.IsNullOrWhiteSpace(fileResponse.Data))
+                {
+                    request.AfterImage = fileResponse.Data;
+                }
+            }
+        }));
+        
+        return requests.MapToDomain();
     }
 
-    public async Task<List<Request>> GetByBrigadeAsync(Guid brigadeId) =>
-        (await _requestRepository.GetByBrigadeAsync(brigadeId)).MapToDomain();
+    public async Task<List<Request>> GetByBrigadeAsync(Guid brigadeId)
+    {
+        var requests = await _requestRepository.GetByBrigadeAsync(brigadeId);
+
+        await Task.WhenAll(requests.Select(async request =>
+        {
+            if (!string.IsNullOrWhiteSpace(request.BeforeImage))
+            {
+                var fileResponse = await _fileServiceClient.GetFileAsBase64Async(request.BeforeImage);
+                if (fileResponse.IsSuccess && !string.IsNullOrWhiteSpace(fileResponse.Data))
+                {
+                    request.BeforeImage = fileResponse.Data;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.AfterImage))
+            {
+                var fileResponse = await _fileServiceClient.GetFileAsBase64Async(request.AfterImage);
+                if (fileResponse.IsSuccess && !string.IsNullOrWhiteSpace(fileResponse.Data))
+                {
+                    request.AfterImage = fileResponse.Data;
+                }
+            }
+        }));
+
+        return requests.MapToDomain();
+    }
 
     public async Task<bool> CreateAsync(CreateNewRequest request)
     {

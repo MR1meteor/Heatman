@@ -29,7 +29,20 @@ public class FileController : BaseController
     public async Task<IActionResult> GetUrl([FromQuery] string filename)
     {
         var url = await _uploadService.GetFileUrlAsync(filename);
-        if (url == null) return NotFound("Файл не найден");
-        return Ok(new { Url = url });
+        if (url == null) return BadRequest("Файл не найден");
+        return Ok(url);
+    }
+
+    [HttpGet("{fileName}/base64")]
+    public async Task<IActionResult> GetFileAsBase64([FromRoute] string fileName)
+    {
+        var base64 = await _uploadService.GetFileAsBase64Async(fileName);
+
+        if (base64 == null)
+        {
+            return BadRequest("File not found");
+        }
+
+        return Ok(base64);
     }
 }

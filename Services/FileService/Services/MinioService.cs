@@ -1,6 +1,7 @@
 ﻿using FileService.Services.Interfaces;
 using Minio;
 using Minio.DataModel.Args;
+using Minio.Exceptions;
 
 namespace FileService.Services;
 
@@ -44,6 +45,25 @@ public class MinioService : IMinioService
         }
     }
 
+    public async Task<byte[]?> GetFileAsync(string objectName)
+    {
+        try
+        {
+            using var ms = new MemoryStream();
+
+            await _minioClient.GetObjectAsync(new GetObjectArgs()
+                .WithBucket(_bucket)
+                .WithObject(objectName)
+                .WithCallbackStream(stream => stream.CopyTo(ms)));
+
+            return ms.ToArray();
+        }
+        catch (ObjectNotFoundException)
+        {
+            return null;
+        }
+    }
+
     public async Task<string> GeneratePresignedUrlAsync(string fileName, int expirySeconds = 3600)
     {
         var args = new PresignedGetObjectArgs()
@@ -53,4 +73,6 @@ public class MinioService : IMinioService
 
         return await _minioClient.PresignedGetObjectAsync(args);
     }
+    
+    
 }

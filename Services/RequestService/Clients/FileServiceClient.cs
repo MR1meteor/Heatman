@@ -41,4 +41,19 @@ public class FileServiceClient : IFileServiceClient
 
         return Result<string>.Success(responseContent);
     }
+
+    public async Task<Result<string>> GetFileAsBase64Async(string fileName)
+    {
+        var response = await _httpClient.GetAsync($"{_baseUrl}/api/file/{fileName}/base64");
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError($"file-service: get file as base 64 returned {response.StatusCode}: {responseContent}");
+            return Result<string>.Failure($"Microservice request failure: {responseContent}");
+        }
+        
+        return Result<string>.Success(responseContent);
+
+    }
 }
