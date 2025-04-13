@@ -30,7 +30,10 @@ public class RequestServiceClient : IRequestServiceClient
         }
 
         Console.WriteLine($"Testtttt: {responseContent}");
-        var request = JsonSerializer.Deserialize<Request>(responseContent);
+        var request = JsonSerializer.Deserialize<Request>(responseContent, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
         return Result<Request>.Success(request);
     }
 }
