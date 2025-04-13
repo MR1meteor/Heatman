@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ReportService.Clients;
 using ReportService.DataAccess.Database.Postgres;
 using Shared.Dapper;
 using Shared.Dapper.Interfaces;
@@ -38,6 +39,8 @@ public class Startup
                 };
             });
 
+        services.AddHttpClient<RequestServiceClient>();
+        
         services.AddSingleton<IDapperSettings, PostgresDapperSettings>();
         services.AddSingleton<IDapperContext, DapperContext>();
         services.RegisterAllTypes<IDependency>(typeof(Startup).Assembly);
@@ -45,7 +48,7 @@ public class Startup
         services.AddLogging(b => b.AddConsole());
         services.AddControllers();
         services.AddSwaggerGen();
-        // services.AddPostgresMigrationRunner();
+        services.AddPostgresMigrationRunner();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

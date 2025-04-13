@@ -3,6 +3,7 @@
 public class DbStopResumeAct
 {
     public Guid Id { get; set; }
+    public Guid RequestId { get; set; }
     public int Type { get; set; }
     public DateTime WorkTime { get; set; }
     public string Address { get; set; } = string.Empty;

@@ -1,6 +1,6 @@
-﻿namespace AuthService.Models.Db;
+﻿namespace ReportService.Models.Domain;
 
-public class DbUser
+public class User
 {
     public Guid Id { get; set; }
     public string VerificationCode { get; set; } = string.Empty;

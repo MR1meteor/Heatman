@@ -12,7 +12,9 @@ public static class UserMapper
             : new DbUser
             {
                 Id = domain.Id,
-                VerificationCode = domain.VerificationCode
+                VerificationCode = domain.VerificationCode,
+                FullName = domain.FullName,
+                IsAdmin = domain.IsAdmin
             };
     }
 
@@ -23,7 +25,16 @@ public static class UserMapper
             : new User
             {
                 Id = db.Id,
-                VerificationCode = db.VerificationCode
+                VerificationCode = db.VerificationCode,
+                FullName = db.FullName,
+                IsAdmin = db.IsAdmin
             };
+    }
+
+    public static List<User> MapToDomain(this IEnumerable<DbUser?> db)
+    {
+        return db == null
+            ? []
+            : db.Where(single => single != null).Select(MapToDomain).ToList();
     }
 }

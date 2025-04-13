@@ -5,6 +5,7 @@ namespace ReportService.Models.Domain;
 public class StopResumeAct
 {
     public Guid Id { get; set; }
+    public Guid RequestId { get; set; }
     public StopResumeWorkType Type { get; set; }
     public DateTime WorkTime { get; set; }
     public string Address { get; set; } = string.Empty;

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AuthService.DataAccess.Repositories.Sql.User {
+namespace ReportService.DataAccess.Repositories.Sql.StopResumeAct {
     using System;
     
     
@@ -38,7 +38,7 @@ namespace AuthService.DataAccess.Repositories.Sql.User {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AuthService.DataAccess.Repositories.Sql.User.SqlScripts", typeof(SqlScripts).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ReportService.DataAccess.Repositories.Sql.StopResumeAct.SqlScripts", typeof(SqlScripts).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,27 +61,32 @@ namespace AuthService.DataAccess.Repositories.Sql.User {
         
         /// <summary>
         ///   Looks up a localized string similar to SELECT id AS &quot;Id&quot;,
-        ///       verification_code AS &quot;VerificationCode&quot;,
-        ///       full_name AS &quot;FullName&quot;,
-        ///       is_admin AS &quot;IsAdmin&quot;
-        ///FROM users
-        ///WHERE id = any(@Ids).
+        ///       request_id AS &quot;RequestId&quot;,
+        ///       type AS &quot;Type&quot;,
+        ///       work_time AS &quot;WorkTime&quot;,
+        ///       address AS &quot;Address&quot;,
+        ///       has_commuting_device AS &quot;HasCommutingDevice&quot;,
+        ///       result AS &quot;Result&quot;,
+        ///       work_method AS &quot;WorkMethod&quot;,
+        ///       metering_device_location_type AS &quot;MeteringDeviceLocationType&quot;,
+        ///       metering_device_location AS &quot;MeteringsDevieLocation&quot;,
+        ///       device_readings AS &quot;DeviceReadings&quot;,
+        ///       work_method_type AS &quot;WorkMethodType&quot;,
+        ///       workers AS &quot;Workers&quot; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string GetByIds {
+        internal static string GetByRequestId {
             get {
-                return ResourceManager.GetString("GetByIds", resourceCulture);
+                return ResourceManager.GetString("GetByRequestId", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT id as &quot;Id&quot;,
-        ///       verification_code as &quot;VerificationCode&quot;
-        ///FROM users
-        ///WHERE verification_code = @VerificationCode.
+        ///   Looks up a localized string similar to INSERT INTO stop_resume_acts(request_id, type, work_time, address, has_commuting_device, result, work_method, metering_device_location_type, metering_device_location, device_readings, work_method_type, workers, client_full_name)
+        ///VALUES(@RequestId, @Type, @WorkTime, @Address, @HasCommutingDevice, @Result, @WorkMethod, @MeteringDeviceLocationType, @MeteringDeviceLocation, @DeviceReadings, @WorkMethodType, @Workers, @ClientFillName).
         /// </summary>
-        internal static string GetByVerificationCode {
+        internal static string Insert {
             get {
-                return ResourceManager.GetString("GetByVerificationCode", resourceCulture);
+                return ResourceManager.GetString("Insert", resourceCulture);
             }
         }
     }

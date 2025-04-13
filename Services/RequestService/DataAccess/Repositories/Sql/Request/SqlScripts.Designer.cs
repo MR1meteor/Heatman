@@ -63,6 +63,7 @@ namespace RequestService.DataAccess.Repositories.Sql.Request {
         ///   Looks up a localized string similar to SELECT id AS &quot;Id&quot;,
         ///       city AS &quot;City&quot;,
         ///       street AS &quot;Street&quot;,
+        ///       house AS &quot;House&quot;,
         ///       room AS &quot;Room&quot;,
         ///       flat AS &quot;Flat&quot;,
         ///       device AS &quot;Device&quot;,
@@ -72,13 +73,41 @@ namespace RequestService.DataAccess.Repositories.Sql.Request {
         ///       work_time AS &quot;WorkTime&quot;,
         ///       completion_time AS &quot;CompletionTime&quot;,
         ///       brigade_id AS &quot;BrigadeId&quot;,
-        ///       geotag AS &quot;GeoTag&quot;
+        ///       geotag AS &quot;GeoTag&quot;,
+        ///       before_image AS &quot;BeforeImage&quot;,
+        ///       after_image AS &quot;AfterImage&quot;
         ///FROM requests
-        ///WHERE brigade_id = @BrigadeId.
+        ///WHERE brigade_ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GetByBrigade {
             get {
                 return ResourceManager.GetString("GetByBrigade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT id AS &quot;Id&quot;,
+        ///       city AS &quot;City&quot;,
+        ///       street AS &quot;Street&quot;,
+        ///       house AS &quot;House&quot;,
+        ///       room AS &quot;Room&quot;,
+        ///       flat AS &quot;Flat&quot;,
+        ///       device AS &quot;Device&quot;,
+        ///       status AS &quot;status&quot;,
+        ///       type AS type,
+        ///       creation_time AS &quot;CreationTime&quot;,
+        ///       work_time AS &quot;WorkTime&quot;,
+        ///       completing_time AS &quot;CompletionTime&quot;,
+        ///       brigade_id AS &quot;BrigadeId&quot;,
+        ///       geotag AS &quot;GeoTag&quot;,
+        ///       before_immger AS &quot;BefireImage&quot;,
+        ///       after_image AS &quot;AfterImage&quot;
+        ///FROM requests
+        ///WHERE id = @Id.
+        /// </summary>
+        internal static string GetById {
+            get {
+                return ResourceManager.GetString("GetById", resourceCulture);
             }
         }
         

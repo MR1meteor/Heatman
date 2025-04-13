@@ -1,4 +1,5 @@
-﻿using RequestService.Models.Domain;
+﻿using RequestService.Models.Db;
+using RequestService.Models.Domain;
 using RequestService.Models.Dtos;
 using Shared.DependencyInjection.Interfaces;
 
@@ -13,4 +14,5 @@ public interface IRequestService : ITransient
     Task<bool> SetCompletedStatusAsync(Guid requestId);
     Task<bool> UploadBeforeFileAsync(Guid requestId, byte[] fileBytes);
     Task<bool> UploadAfterFileAsync(Guid requestId, byte[] fileBytes);
+    Task<Request?> GetByIdAsync(Guid requestId);
 }

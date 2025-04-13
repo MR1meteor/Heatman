@@ -8,10 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DataAccess\Database\Postgres\Migrations\" />
-      <Folder Include="DataAccess\Repositories\Interfaces\" />
       <Folder Include="Mapping\" />
-      <Folder Include="Services\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -32,6 +29,30 @@
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="DataAccess\Repositories\Sql\ControlAct\SqlScripts.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SqlScripts.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="DataAccess\Repositories\Sql\StopResumeAct\SqlScripts.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SqlScripts.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="DataAccess\Repositories\Sql\ControlAct\SqlScripts.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>SqlScripts.resx</DependentUpon>
+      </Compile>
+      <Compile Update="DataAccess\Repositories\Sql\StopResumeAct\SqlScripts.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>SqlScripts.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

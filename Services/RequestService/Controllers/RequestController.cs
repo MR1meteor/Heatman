@@ -26,6 +26,13 @@ public class RequestController : BaseController
         
         return Ok(response.MapToDto());
     }
+
+    [HttpGet("by-id/{requestId:guid}")]
+    public async Task<IActionResult> GetById(Guid requestId)
+    {
+        var response = await _requestService.GetByIdAsync(requestId);
+        return Ok(response);
+    }
     
     [HttpGet("{brigadeId:guid}")]
     public async Task<IActionResult> GetByBrigade([FromRoute] Guid brigadeId)

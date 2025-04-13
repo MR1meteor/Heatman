@@ -17,4 +17,7 @@ public class UserRepository : IUserRepository
 
     public Task<DbUser?> GetByVerificationCode(string code) =>
         _dapperContext.FirstOrDefault<DbUser>(new QueryObject(SqlScripts.GetByVerificationCode, new { VerificationCode = code }));
+
+    public Task<List<DbUser>> GetByIds(IEnumerable<Guid> ids) =>
+        _dapperContext.ListOrEmpty<DbUser>(new QueryObject(SqlScripts.GetByIds, new { Ids = ids }));
 }

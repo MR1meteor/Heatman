@@ -8,7 +8,8 @@ public record CreateStopResumeActRequest
     public bool HasCommutingDevice { get; set; }
     public StopResumeWorkResult Result { get; set; }
     public string WorkMethod { get; set; } = string.Empty;
-    public MeteringDeviceLocation MeteringDeviceLocation { get; set; }
+    public MeteringDeviceLocation MeteringDeviceLocationType { get; set; }
+    public string MeteringDeviceLocation { get; set; } = string.Empty;
     public string DeviceReadings { get; set; } = string.Empty;
     public StopResumeWorkMethod WorkMethodType { get; set; }
     public string ClientFullName { get; set; } = string.Empty;

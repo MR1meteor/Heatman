@@ -2,8 +2,8 @@
 
 public class DbControlAct
 {
-    public int Id { get; set; }
-    public bool IsUnauthorizedConnection { get; set; }
+    public Guid Id { get; set; }
+    public Guid RequestId { get; set; }
     public DateTime WorkTime { get; set; }
     public string Address { get; set; } = string.Empty;
     public bool HasCommutingDevice { get; set; }

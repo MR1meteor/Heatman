@@ -188,4 +188,9 @@ public class RequestService : IRequestService
         await _requestRepository.SetAfterImageAsync(requestId, uploadFileResult.Data);
         return true;
     }
+
+    public async Task<Request?> GetByIdAsync(Guid requestId)
+    {
+        return (await _requestRepository.GetByIdAsync(requestId)).MapToDomain() ?? null;
+    }
 }
