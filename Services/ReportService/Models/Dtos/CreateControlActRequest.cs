@@ -4,6 +4,7 @@ namespace ReportService.Models.Dtos;
 
 public record CreateControlActRequest
 {
+    public Guid RequestId { get; set; }
     public bool HasViolation { get; set; }
     public bool HasCommutingDevice { get; set; }
     public MeteringDeviceLocation MeteringDeviceLocationType { get; set; }

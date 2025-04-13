@@ -4,7 +4,7 @@ namespace ReportService.Models.Dtos;
 
 public record CreateStopResumeActRequest
 {
-    public Guid BrigadeId { get; set; }
+    public Guid RequestId { get; set; }
     public bool HasCommutingDevice { get; set; }
     public StopResumeWorkResult Result { get; set; }
     public string WorkMethod { get; set; } = string.Empty;
