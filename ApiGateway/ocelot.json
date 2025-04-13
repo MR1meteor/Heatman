@@ -70,15 +70,15 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/images/{everything}",
+      "DownstreamPathTemplate": "/api/report/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "report-service",
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/images/{everything}",
+      "UpstreamPathTemplate": "/report/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
