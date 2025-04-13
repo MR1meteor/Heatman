@@ -191,6 +191,6 @@ public class RequestService : IRequestService
 
     public async Task<Request?> GetByIdAsync(Guid requestId)
     {
-        return (await _requestRepository.GetByIdAsync(requestId)).MapToDomain() ?? null;
+        return (await _requestRepository.GetByRequestIdAsync(requestId)).MapToDomain() ?? null;
     }
 }

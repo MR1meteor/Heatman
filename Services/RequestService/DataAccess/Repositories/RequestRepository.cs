@@ -25,11 +25,11 @@ public class RequestRepository : IRequestRepository
         return await _dapperContext.ListOrEmpty<DbRequest>(new QueryObject(SqlScripts.GetByBrigade, parameters)) ?? [];
     }
 
-    public async Task<DbRequest?> GetByIdAsync(Guid requestId)
+    public async Task<DbRequest?> GetByRequestIdAsync(Guid requestId)
     {
         var parameters = new
         {
-            RequestId = requestId
+            Id = requestId
         };
 
         return await _dapperContext.FirstOrDefault<DbRequest>(new QueryObject(SqlScripts.GetById, parameters));

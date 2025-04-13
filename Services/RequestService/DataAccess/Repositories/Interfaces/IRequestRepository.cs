@@ -6,7 +6,7 @@ namespace RequestService.DataAccess.Repositories.Interfaces;
 public interface IRequestRepository : ITransient
 {
     Task<List<DbRequest>> GetByBrigadeAsync(Guid brigadeId);
-    Task<DbRequest?> GetByIdAsync(Guid requestId);
+    Task<DbRequest?> GetByRequestIdAsync(Guid requestId);
     Task AddAsync(DbRequest request);
     Task AddAsync(IEnumerable<DbRequest> requests);
     Task SetBeforeImageAsync(Guid requestId, string imageName);
