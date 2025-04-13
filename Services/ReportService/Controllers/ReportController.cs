@@ -26,6 +26,7 @@ public class ReportController : BaseController
     [HttpPost("stop-resume-act")]
     public async Task<IActionResult> CreateStopResumeAct([FromBody] CreateStopResumeActRequest request)
     {
-        return Ok();
+        var response = await _actsService.CreateStopResumeActAsync(request);
+        return response ? Ok() : BadRequest("Failed to create stop resume act");
     }
 }
