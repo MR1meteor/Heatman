@@ -43,6 +43,7 @@ public class Startup
         services.AddHttpClient<AuthServiceClient>();
         services.AddHttpClient<RequestServiceClient>();
         services.AddHttpClient<BrigadeServiceClient>();
+        services.AddHttpClient<FileServiceClient>();
         
         services.AddSingleton<IDapperSettings, PostgresDapperSettings>();
         services.AddSingleton<IDapperContext, DapperContext>();
