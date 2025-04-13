@@ -1,0 +1,2 @@
+﻿INSERT INTO requests (city, street, house, room, flat, device, status, type, creation_time, work_time, completion_time, brigade_id, geotag)
+VALUES (@City, @Street, @House, @Room, @Flat, @Device, @Status, @Type, @CreationTime, @WorkTime, @CompletionTime, @BrigadeId, @GeoTag)

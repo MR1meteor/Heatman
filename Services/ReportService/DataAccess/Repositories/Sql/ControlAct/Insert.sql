@@ -1,0 +1,2 @@
+INSERT INTO control_acts(request_id, work_time, address, has_commuting_device, has_violation, metering_device_location_type, metering_device_location, device_readings, workers)
+VALUES(@RequestId, @WorkTime, @Address, @HasCommutingDevice, @HasViolation, @MeteringDeviceLocationType, @MeteringDeviceLocation, @DeviceReadings, @Workers)

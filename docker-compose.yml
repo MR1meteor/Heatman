@@ -1,0 +1,140 @@
+version: '3.8'
+
+services:
+    npm:
+        image: 'jc21/nginx-proxy-manager:latest'
+        restart: unless-stopped
+        ports:
+            - '80:80'
+            - '81:81'
+            - '443:443'
+        volumes:
+            - ./data:/data
+            - ./letsencrypt:/etc/letsencrypt
+
+    api-gateway:
+        build:
+            context: ./ApiGateway
+            dockerfile: Dockerfile
+        ports:
+            - "5000:5000"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=${ENV}
+        depends_on:
+            - auth-service
+            - brigade-service
+            - request-service
+            - report-service
+            - file-service
+        restart: always
+        networks:
+            - app-network
+
+    auth-service:
+        build:
+            context: .
+            dockerfile: ./Services/AuthService/Dockerfile
+        ports:
+            - "5001:5001"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=${ENV}
+        depends_on:
+            - postgres
+        restart: always
+        networks:
+            - app-network
+
+    brigade-service:
+        build:
+            context: .
+            dockerfile: ./Services/BrigadeService/Dockerfile
+        ports:
+            - "5003:5003"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=${ENV}
+        depends_on:
+            - postgres
+        restart: always
+        networks:
+            - app-network
+
+    request-service:
+        build:
+            context: .
+            dockerfile: ./Services/RequestService/Dockerfile
+        ports:
+            - "5004:5004"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=${ENV}
+        depends_on:
+            - postgres
+        restart: always
+        networks:
+            - app-network
+    
+    report-service:
+        build:
+            context: .
+            dockerfile: ./Services/ReportService/Dockerfile
+        ports:
+            - "5005:5005"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=${ENV}
+        depends_on:
+            - postgres
+        restart: always
+        networks:
+            - app-network
+    
+    file-service:
+        build:
+            context: .
+            dockerfile: ./Services/FileService/Dockerfile
+        ports:
+            - "5006:5006"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=${ENV}
+        depends_on:
+            - minio
+        restart: always
+        networks:
+            - app-network
+
+    postgres:
+        image: postgres:16
+        volumes:
+            - ./pg-init-scripts/:/docker-entrypoint-initdb.d
+            - postgres_data:/var/lib/postgresql/data
+        restart: always
+        environment:
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_MULTIPLE_DATABASES: auth,brigade-service,request-service,report-service
+            POSTGRES_MULTIPLE_EXTENSIONS: uuid-ossp
+        ports:
+            - "5432:5432"
+        networks:
+            - app-network
+              
+    minio:
+        image: minio/minio
+        container_name: minio
+        environment:
+            MINIO_ROOT_USER: minioadmin
+            MINIO_ROOT_PASSWORD: minioadmin
+        command: server /data --console-address ":9001"
+        ports:
+            - "9000:9000"
+            - "9001:9001"
+        volumes:
+            - minio_data:/data
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
+        
+volumes:
+    postgres_data:
+    minio_data:
