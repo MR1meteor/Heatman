@@ -1,17 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReportService.Models.Dtos;
+using ReportService.Services.Interfaces;
 using Shared.Controllers;
 
 namespace ReportService.Controllers;
 
 [ApiController]
 [Route("api/report")]
-public class ReportController : BaseController 
+public class ReportController : BaseController
 {
+    private readonly IActsService _actsService;
+
+    public ReportController(IActsService actsService)
+    {
+        _actsService = actsService;
+    }
+    
     [HttpPost("control-act")]
     public async Task<IActionResult> CreateReport([FromBody] CreateControlActRequest request)
     {
-        return Ok();
+        var response = await _actsService.CreateControlActAsync(request);
+        return response ? Ok() : BadRequest("Failed to create control report");
     }
 
     [HttpPost("stop-resume-act")]
