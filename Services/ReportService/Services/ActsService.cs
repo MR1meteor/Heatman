@@ -123,24 +123,26 @@ public class ActsService : IActsService
         return true;
     }
 
-    public async Task<string> GetControlActAsync(Guid requestId)
+    public async Task<byte[]> GetControlActAsync(Guid requestId)
     {
         var controlAct = (await _controlActRepository.GetByRequestIdAsync(requestId)).MapToDomain();
 
         if (controlAct == null)
         {
-            return string.Empty;
+            return [];
         }
 
         var base64Act = _actFileProcessor.FillTemplateBase64(controlAct, Path.Combine(AppContext.BaseDirectory, "Models", "Templates", "act_control_template.docx"));
-        var fileNameResult = await _fileServiceClient.UploadFileAsync(base64Act);
+        return base64Act;
 
-        if (fileNameResult.IsFailure || string.IsNullOrWhiteSpace(fileNameResult.Data))
-        {
-            return string.Empty;
-        }
-
-        var fileUrl = await _fileServiceClient.GetUrlAsync(fileNameResult.Data);
-        return fileUrl.IsSuccess ? fileUrl.Data : string.Empty;
+        // var fileNameResult = await _fileServiceClient.UploadFileAsync(base64Act);
+        //
+        // if (fileNameResult.IsFailure || string.IsNullOrWhiteSpace(fileNameResult.Data))
+        // {
+        //     return string.Empty;
+        // }
+        //
+        // var fileUrl = await _fileServiceClient.GetUrlAsync(fileNameResult.Data);
+        // return fileUrl.IsSuccess ? fileUrl.Data : string.Empty;
     }
 }

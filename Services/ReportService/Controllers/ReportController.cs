@@ -34,6 +34,6 @@ public class ReportController : BaseController
     public async Task<IActionResult> GetControlAct(Guid requestId)
     {
         var response = await _actsService.GetControlActAsync(requestId);
-        return !string.IsNullOrWhiteSpace(response) ? Ok(response) : BadRequest("Failed to get control act");
+        return response == null || response.Length == 0 ? BadRequest("Failed to get control act") : Ok(response);
     }
 }
