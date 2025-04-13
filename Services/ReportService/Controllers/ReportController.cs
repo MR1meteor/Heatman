@@ -30,7 +30,7 @@ public class ReportController : BaseController
         return response ? Ok() : BadRequest("Failed to create stop resume act");
     }
 
-    [HttpGet("control-act/{requestId:guid")]
+    [HttpGet("control-act/{requestId:guid}")]
     public async Task<IActionResult> GetControlAct(Guid requestId)
     {
         var response = await _actsService.GetControlActAsync(requestId);
