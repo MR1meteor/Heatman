@@ -28,7 +28,8 @@ public class RequestServiceClient : IRequestServiceClient
             _logger.LogError($"request-service: get request by id returned {response.StatusCode}: {responseContent}");
             return Result<Request>.Failure("Microservice error");
         }
-        
+
+        Console.WriteLine($"Testtttt: {responseContent}");
         var request = JsonSerializer.Deserialize<Request>(responseContent);
         return Result<Request>.Success(request);
     }

@@ -28,7 +28,6 @@ public class BrigadeServiceClient : IBrigadeServiceClient
             return Result<List<Guid>>.Failure($"Microservice error: {responseContent}");
         }
         
-        Console.WriteLine($"TESTTTTT: {responseContent}");
         var employeeIds = JsonSerializer.Deserialize<List<Guid>>(responseContent);
         return Result<List<Guid>>.Success(employeeIds);
     }
