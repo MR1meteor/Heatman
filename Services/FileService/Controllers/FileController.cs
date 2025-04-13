@@ -22,7 +22,7 @@ public class FileController : BaseController
             return BadRequest("Файл пустой");
 
         var filename = await _uploadService.UploadFileAsync(file);
-        return Ok(new { FileName = filename });
+        return Ok(filename);
     }
 
     [HttpGet("url")]
