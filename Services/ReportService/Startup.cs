@@ -45,7 +45,7 @@ public class Startup
         services.AddLogging(b => b.AddConsole());
         services.AddControllers();
         services.AddSwaggerGen();
-        services.AddPostgresMigrationRunner();
+        // services.AddPostgresMigrationRunner();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
