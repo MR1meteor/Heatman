@@ -21,4 +21,10 @@ public class AuthController : ControllerBase
         var token = await _authService.LoginByVerificationCodesAsync(request.FirstCode, request.SecondCode);
         return string.IsNullOrWhiteSpace(token) ? Unauthorized("Invalid codes") : Ok(new { Token = token });
     }
+
+    [HttpPost("login-admin")]
+    public async Task<IActionResult> LoginAdmin([FromBody] LoginCodesRequest request)
+    {
+        return Ok();
+    }
 }
