@@ -7,4 +7,5 @@ public interface IBrigadeEmployeeRepository : ITransient
 {
     Task<bool> ExistsTodayByEmployeesAsync(IEnumerable<Guid>? employeeIds);
     Task InsertAsync(DbBrigadeEmployee? employees);
+    Task<List<Guid>> GetIdsByBrigadeId(Guid brigadeId);
 }

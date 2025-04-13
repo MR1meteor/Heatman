@@ -82,6 +82,16 @@ namespace BrigadeService.DataAccess.Repositories.Sql.BrigadeEmployee {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        internal static string GetIdsByBrigadeId {
+            get {
+                return ResourceManager.GetString("GetIdsByBrigadeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO brigade_employees(brigade_id, employee_id)
+        ///VALUES(@BrigadeId, @EmployeeId).
+        /// </summary>
         internal static string Insert {
             get {
                 return ResourceManager.GetString("Insert", resourceCulture);

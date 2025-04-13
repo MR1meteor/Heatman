@@ -47,4 +47,14 @@ public class BrigadeEmployeeRepository : IBrigadeEmployeeRepository
         
         await _dapperContext.Command<DbBrigadeEmployee>(new QueryObject(SqlScripts.Insert, parameters));
     }
+
+    public async Task<List<Guid>> GetIdsByBrigadeId(Guid brigadeId)
+    {
+        var parameters = new
+        {
+            BrigadeId = brigadeId
+        };
+
+        return await _dapperContext.ListOrEmpty<Guid>(new QueryObject(SqlScripts.GetIdsByBrigadeId, parameters));
+    }
 }

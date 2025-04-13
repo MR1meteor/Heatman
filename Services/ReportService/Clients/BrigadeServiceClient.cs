@@ -20,7 +20,7 @@ public class BrigadeServiceClient : IBrigadeServiceClient
 
     public async Task<Result<List<Guid>>> GetBrigadeEmployeeIdsAsync(Guid brigadeId)
     {
-        var response = await _httpClient.GetAsync($"{_baseUrl}/api//brigade/{brigadeId}/employees");
+        var response = await _httpClient.GetAsync($"{_baseUrl}/api//brigade/employees/by-brigade/{brigadeId}/ids");
         var responseContent = await response.Content.ReadAsStringAsync();
         
         if (!response.IsSuccessStatusCode)
