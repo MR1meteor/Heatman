@@ -12,7 +12,7 @@ SELECT id AS "Id",
        completion_time AS "CompletionTime",
        brigade_id AS "BrigadeId",
        geotag AS "GeoTag",
-       before_image AS "BefireImage",
+       before_image AS "BeforeImage",
        after_image AS "AfterImage"
 FROM requests
 WHERE id = @Id

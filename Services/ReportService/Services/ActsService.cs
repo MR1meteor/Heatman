@@ -1,4 +1,5 @@
-﻿using ReportService.Clients.Interfaces;
+﻿using System.Text.Json;
+using ReportService.Clients.Interfaces;
 using ReportService.DataAccess.Repositories.Interfaces;
 using ReportService.Models.Db;
 using ReportService.Models.Dtos;
@@ -36,6 +37,8 @@ public class ActsService : IActsService
             return false;
         }
 
+        Console.WriteLine($"DATA: {JsonSerializer.Serialize(requestResult.Data)}");
+        
         var brigadeUserIdsResult = await _brigadeServiceClient.GetBrigadeEmployeeIdsAsync(requestResult.Data.BrigadeId);
 
         if (brigadeUserIdsResult.IsFailure || brigadeUserIdsResult.Data == null || brigadeUserIdsResult.Data.Count != 2)
