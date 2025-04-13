@@ -29,7 +29,6 @@ public class RequestServiceClient : IRequestServiceClient
             return Result<Request>.Failure("Microservice error");
         }
 
-        Console.WriteLine($"Testtttt: {responseContent}");
         var request = JsonSerializer.Deserialize<Request>(responseContent, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true

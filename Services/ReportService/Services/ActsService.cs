@@ -36,8 +36,6 @@ public class ActsService : IActsService
         {
             return false;
         }
-
-        Console.WriteLine($"DATA: {JsonSerializer.Serialize(requestResult.Data)}");
         
         var brigadeUserIdsResult = await _brigadeServiceClient.GetBrigadeEmployeeIdsAsync(requestResult.Data.BrigadeId);
 
