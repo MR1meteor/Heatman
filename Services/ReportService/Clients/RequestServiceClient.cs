@@ -20,7 +20,6 @@ public class RequestServiceClient : IRequestServiceClient
     
     public async Task<Result<Request>> GetRequestByIdAsync(Guid requestId)
     {
-        Console.WriteLine($"Url: {_baseUrl}/api/requests/by-id/{requestId}");
         var response = await _httpClient.GetAsync($"{_baseUrl}/api/requests/by-id/{requestId}");
         var responseContent = await response.Content.ReadAsStringAsync();
         
