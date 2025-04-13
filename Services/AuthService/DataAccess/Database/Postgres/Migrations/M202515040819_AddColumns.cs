@@ -9,7 +9,7 @@ public class M202515040819_AddColumns : FluentMigrator.Migration
     {
         Alter.Table("users")
             .AddColumn("full_name").AsString().Nullable()
-            .AddColumn("is_admin").AsBoolean();
+            .AddColumn("is_admin").AsBoolean().WithDefaultValue(false);
     }
 
     public override void Down()
