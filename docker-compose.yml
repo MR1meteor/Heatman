@@ -70,6 +70,20 @@ services:
         networks:
             - app-network
     
+    report-service:
+        build:
+            context: .
+            dockerfile: ./Service/ReportService/Dockerfile
+        ports:
+            - "5005:5005"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=${ENV}
+        depends_on:
+            - postgres
+        restart: always
+        networks:
+            - app-network
+    
     file-service:
         build:
             context: .
